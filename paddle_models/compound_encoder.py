@@ -190,6 +190,7 @@ class VanBondFloatRBF(nn.Layer):
         for i, name in enumerate(self.bond_float_names):
             x = bond_float_features[name]
             rbf_x = self.rbf_list[i](x)
+            # rbf_x = paddle.reshape(x, [-1, 1])
             out_embed += self.linear_list[i](rbf_x)
         return out_embed
 
