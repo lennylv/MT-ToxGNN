@@ -8,12 +8,10 @@ from pgl.nn import GraphPool
 from paddle_models.GNN_blocks import GIN, MeanPool, GraphNorm
 from paddle_models.compound_encoder import AtomEmbedding, BondEmbedding, BondFloatRBF, VanBondFloatRBF, BondAngleFloatRBF
 
-class GNNBlock(nn.Layer):
-    """
-    van der Block
-    """
+class GeoGNNBlock(nn.Layer):
+
     def __init__(self, embed_dim, dropout_rate, last_act):
-        super(GNNBlock, self).__init__()
+        super(GeoGNNBlock, self).__init__()
 
         self.embed_dim = embed_dim
         self.last_act = last_act
@@ -37,11 +35,6 @@ class GNNBlock(nn.Layer):
         return out
 
 class vdWGraph(nn.Layer):
-    """
-    The GeoGNN Model used in GEM.
-    Args:
-        model_config(dict): a dict of model configurations.
-    """
     def __init__(self, model_config={}):
         super(vdWGraph, self).__init__()
 
@@ -53,7 +46,6 @@ class vdWGraph(nn.Layer):
         self.atom_names = model_config['atom_names']
         self.bond_names = model_config['bond_names']
         self.bond_float_names = model_config['bond_float_names']
-        # self.bond_angle_float_names = model_config['bond_angle_float_names']
         self.edge_van_names = model_config['atom_van_bond_names']
 
         self.init_atom_embedding = AtomEmbedding(self.atom_names, self.embed_dim)
@@ -63,30 +55,26 @@ class vdWGraph(nn.Layer):
         
         self.bond_embedding_list = nn.LayerList()
         self.bond_float_rbf_list = nn.LayerList()
-        # self.bond_angle_float_rbf_list = nn.LayerList()
+
         self.atom_van_bond_rbf_list = nn.LayerList()
 
         self.atom_bond_block_list = nn.LayerList()
-        self.atom_van_bond_list = nn.LayerList() #lulu
-        # self.bond_angle_block_list = nn.LayerList()
+        self.atom_van_bond_list = nn.LayerList()
+
         for layer_id in range(self.layer_num):
             self.bond_embedding_list.append(
                     BondEmbedding(self.bond_names, self.embed_dim))
             self.bond_float_rbf_list.append(
                     BondFloatRBF(self.bond_float_names, self.embed_dim))
-            # self.bond_angle_float_rbf_list.append(
-                    # BondAngleFloatRBF(self.bond_angle_float_names, self.embed_dim))
+
             self.atom_van_bond_rbf_list.append(
                     VanBondFloatRBF(self.edge_van_names, self.embed_dim))
             
             self.atom_bond_block_list.append(
-                    GNNBlock(self.embed_dim, self.dropout_rate, last_act=(layer_id != self.layer_num - 1)))
+                    GeoGNNBlock(self.embed_dim, self.dropout_rate, last_act=(layer_id != self.layer_num - 1)))
             self.atom_van_bond_list.append(
-                    GNNBlock(self.embed_dim, self.dropout_rate, last_act=layer_id != self.layer_num - 1))
-            # self.bond_angle_block_list.append(
-            #         GeoGNNBlock(self.embed_dim, self.dropout_rate, last_act=(layer_id != self.layer_num - 1)))
-        
-        # TODO: use self-implemented MeanPool due to pgl bug.
+                    GeoGNNBlock(self.embed_dim, self.dropout_rate, last_act=layer_id != self.layer_num - 1))
+
         if self.readout == 'mean':
             self.graph_pool = MeanPool()
         else:
@@ -99,7 +87,6 @@ class vdWGraph(nn.Layer):
         print('[lulu] atom_names:%s' % str(self.atom_names))
         print('[lulu] bond_names:%s' % str(self.bond_names))
         print('[lulu] bond_float_names:%s' % str(self.bond_float_names))
-        # print('[GeoGNNModel] bond_angle_float_names:%s' % str(self.bond_angle_float_names))
 
     @property
     def node_dim(self):
@@ -119,42 +106,33 @@ class vdWGraph(nn.Layer):
         bond_embed = self.init_bond_embedding(atom_bond_graph.edge_feat)
         edge_hidden = bond_embed + self.init_bond_float_rbf(atom_bond_graph.edge_feat)
 
-        # van_edge_embed = self.init_bond_embedding( van_graph.edge_feat )
         van_edge_hidden = self.init_bond_van_float_rbf( van_graph.edge_feat )
 
         node_hidden_list = [node_hidden]
         van_node_hidden_list = [node_hidden]
 
         edge_hidden_list = [edge_hidden]
-        van_edge_hidden_list = [van_edge_hidden] # lulu
+        van_edge_hidden_list = [van_edge_hidden]
 
-        # node_hidden_only_list = [node_hidden]
         for layer_id in range(self.layer_num):
             node_hidden = self.atom_bond_block_list[layer_id](
                     atom_bond_graph,
                     node_hidden_list[layer_id],
                     edge_hidden_list[layer_id])
             
-            # lulu.
-            # van_node_hidden = self.atom_van_bond_list[layer_id](
-            #         van_graph,
-            #         van_node_hidden_list[layer_id],
-            #         van_edge_hidden_list[layer_id])
+            
+            van_node_hidden = self.atom_van_bond_list[layer_id](
+                    van_graph,
+                    van_node_hidden_list[layer_id],
+                    van_edge_hidden_list[layer_id])
             
             cur_edge_hidden = self.bond_embedding_list[layer_id](atom_bond_graph.edge_feat)
             cur_edge_hidden = cur_edge_hidden + self.bond_float_rbf_list[layer_id](atom_bond_graph.edge_feat)
 
-            # cur_van_edge_hidden = self.bond_embedding_list[layer_id](van_graph.edge_feat)
             cur_van_edge_hidden = self.atom_van_bond_rbf_list[layer_id](van_graph.edge_feat)
-
-            # cur_angle_hidden = self.bond_angle_float_rbf_list[layer_id](bond_angle_graph.edge_feat) 
-            # edge_hidden = self.bond_angle_block_list[layer_id](
-            #         bond_angle_graph,
-            #         cur_edge_hidden,
-            #         cur_angle_hidden)
             
             node_hidden_list.append(node_hidden)
-            # van_node_hidden_list.append(van_node_hidden)
+            van_node_hidden_list.append(van_node_hidden)
 
             edge_hidden_list.append(cur_edge_hidden)
             van_edge_hidden_list.append(cur_van_edge_hidden)
@@ -163,12 +141,12 @@ class vdWGraph(nn.Layer):
         van_node_repr = van_node_hidden_list[-1]
 
         edge_repr = edge_hidden_list[-1]
-        # van_edge_repr = van_edge_hidden_list[-1]
+        van_edge_repr = van_edge_hidden_list[-1]
 
         graph_repr = self.graph_pool(atom_bond_graph, node_repr)
-        # van_graph_repr = self.graph_pool(van_graph, van_node_repr)
+        van_graph_repr = self.graph_pool(van_graph, van_node_repr)
 
         node_repr = node_repr + van_node_repr
-        # graph_repr = graph_repr + van_graph_repr
+        graph_repr = graph_repr + van_graph_repr
 
         return node_repr, edge_repr, graph_repr
