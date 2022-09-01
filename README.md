@@ -22,4 +22,4 @@ you can re-train the model by:
 
 Pre-train the model:
 
-- python pre-train.py
+- python pretraining.py
