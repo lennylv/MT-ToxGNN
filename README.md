@@ -18,3 +18,8 @@ you can re-train the model by:
 
 - python finetune_Toxicity.py --dataset LC50 --retrain 1
 
+--------------------------------------------------------------------------------------
+
+Pre-train the model:
+
+- python pre-train.py
