@@ -1,0 +1,17 @@
+{    
+    "atom_names": ["atomic_num", 
+    "chiral_tag",
+    "degree",
+    "explicit_valence",
+    "formal_charge",
+    "hybridization",
+    "is_aromatic"],
+    "bond_names": ["bond_dir", "bond_type", "is_in_ring"],
+    "bond_float_names": ["bond_length"],
+    "atom_van_bond_names": ["van_der_walls"],
+    "bond_angle_float_names": ["bond_angle"],
+    "embed_dim": 128,
+    "dropout_rate": 0.2,
+    "layer_num": 8,
+    "readout": "mean"
+}
