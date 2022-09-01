@@ -23,3 +23,11 @@ you can re-train the model by:
 Pre-train the model:
 
 - python pretraining.py
+
+--------------------------------------------------------------------------------------
+
+Dependency:
+
+- pip install paddlepaddle
+- pip install rdkit-pypi
+- pip install pgl
