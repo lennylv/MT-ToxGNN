@@ -333,6 +333,7 @@ def main():
     parser.add_argument("--batch_size", type=int, default=512)
     parser.add_argument("--num_workers", type=int, default=1)
     parser.add_argument("--max_epoch", type=int, default=100)
+    parser.add_argument("--re_train", type=int, default=0)
     parser.add_argument("--dataset_name", default='BBBP')
     parser.add_argument("--init_model", default='38')
     parser.add_argument("--seed", type=int, default=798328)
@@ -344,6 +345,10 @@ def main():
     paddle.seed(args.seed)
 
     # clear_main(args)
-    test_save(args)
+    
+    if args.re_train == 1:
+        clear_main(args)
+    else:
+        test_save(args)
 if __name__ == '__main__':
     main()
