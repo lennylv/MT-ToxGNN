@@ -422,6 +422,9 @@ def main():
     parser.add_argument("--seed", type=int, default=312134)
 
     import random
+
+    # we need set random seed to make sure the results reproduction.
+    # However, we hope to make a stable precitor for any random seeds in the future.
     args = parser.parse_args()
     random.seed(args.seed)
     np.random.seed(args.seed)
