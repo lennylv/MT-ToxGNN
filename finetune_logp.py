@@ -235,7 +235,6 @@ def clear_main(args):
     model_config = './config/mlp.json'
     model_config = load_json_config(model_config)
     model_config['task_type'] = task_type
-    model_config['num_tasks'] = len(task_names)
 
     compound_encoder = vdWGraph(compound_encoder_config)
     print('loading init_model..:', args.init_model)
