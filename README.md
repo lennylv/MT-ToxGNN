@@ -28,6 +28,12 @@ you can re-train the model by:
 
 - python finetune_Toxicity.py --dataset LC50 --retrain 1
 
+Some details:
+
+1. Lip data is saved as data/lip.pkl, you can unzip data/lip.zip to use it to save time
+
+2. The trainset of logp is > 25 mb, and you can unzip dataset/logp/trainset.zip to use it
+
 --------------------------------------------------------------------------------------
 
 Dependency:
