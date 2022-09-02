@@ -6,6 +6,14 @@ Pre-train data availability:
 smiles with 2D and 3D conformers: https://pan.baidu.com/s/1avy6ek6Dl1Sn7uuzYSYw6w
 password: wdnm
 
+Pre-train the model:
+
+- python pretraining.py
+
+To save training time, you can generate all needed data for all smiles first:
+
+- python process_graph_data.py
+
 --------------------------------------------------------------------------------------
 
 Reproduce results:
@@ -17,12 +25,6 @@ The finetune_**.py are used to quickly reproduce the results:
 you can re-train the model by:
 
 - python finetune_Toxicity.py --dataset LC50 --retrain 1
-
---------------------------------------------------------------------------------------
-
-Pre-train the model:
-
-- python pretraining.py
 
 --------------------------------------------------------------------------------------
 
