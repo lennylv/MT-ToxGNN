@@ -215,14 +215,10 @@ def clear_main(args):
     dataset_name = args.dataset_name
 
     metric = get_metric(dataset_name)
-    # task_names = get_downstream_task_names(dataset_name, data_path) 
-        
     model_config = './config/mlp.json'
     model_config = load_json_config(model_config)
-    # model_config['task_type'] = task_type
 
     compound_encoder = vdWGraph(compound_encoder_config)
-    # init_model = './save_model/pretrain_models-chemrl_gem/regr.pdparams'
     print('loading init_model..:', args.init_model)
     init_model = './save_encoder/epoch_' + args.init_model + '.pdparams'
     compound_encoder.set_state_dict(paddle.load(init_model))
@@ -238,9 +234,6 @@ def clear_main(args):
     print('Total param num: %s' % (len(model.parameters())))
     print('Encoder param num: %s' % (len(encoder_params)))
     print('Head param num: %s' % (len(head_params)))
-
-    # init_model = './save_model/pretrain_models-chemrl_gem/regr.pdparams'
-    # compound_encoder.set_state_dict(paddle.load(init_model))
 
     print('Processing data...')
     train_dataset, valid_dataset, test_dataset = get_dataset(dataset_name)
