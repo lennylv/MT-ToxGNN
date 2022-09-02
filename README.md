@@ -12,7 +12,7 @@ Pre-train the model:
 
 To save training time, you can generate all needed data for all smiles first:
 
-- python process_graph_data.py
+- python prepare_graph_data.py
 
 --------------------------------------------------------------------------------------
 
