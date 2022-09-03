@@ -46,4 +46,5 @@ Dependency:
 pip install paddlepaddle
 pip install rdkit-pypi
 pip install pgl
+pip install deepchem
 ```
