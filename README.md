@@ -18,7 +18,8 @@ Or download our processes data: https://pan.baidu.com/s/1JyEitczI3ih5vbBDMMaQig 
 
 cat the files
 
-- cat logs.tar.bz2.* | tar -zxv ./processed_data
+- cat logs.tar.bz2.* > new_tar.tar
+- tar xvf new_tar.tar -C ./processed_data/
 
 --------------------------------------------------------------------------------------
 
