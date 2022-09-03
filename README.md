@@ -7,9 +7,9 @@ smiles with 2D and 3D conformers: https://pan.baidu.com/s/1avy6ek6Dl1Sn7uuzYSYw6
 password: wdnm
 
 Pre-train the model:
-
+```
 - python pretraining.py
-
+```
 To save training time, you can generate all needed data for all smiles first:
 
 - python prepare_graph_data.py
