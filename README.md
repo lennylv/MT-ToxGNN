@@ -8,31 +8,31 @@ password: wdnm
 
 Pre-train the model:
 ```
-- python pretraining.py
+python pretraining.py
 ```
 To save training time, you can generate all needed data for all smiles first:
-
-- python prepare_graph_data.py
-
+```
+python prepare_graph_data.py
+```
 Or download our processes data: https://pan.baidu.com/s/1JyEitczI3ih5vbBDMMaQig password:wdnm
 
 cat the files
-
-- cat logs.tar.bz2.* > new_tar.tar
-- tar xvf new_tar.tar -C ./processed_data/
-
+```
+cat logs.tar.bz2.* > new_tar.tar
+tar xvf new_tar.tar -C ./processed_data/
+```
 --------------------------------------------------------------------------------------
 
 Reproduce results:
 
 The finetune_**.py are used to quickly reproduce the results:
-
-- python finetune_Toxicity.py --dataset LC50
-
+```
+python finetune_Toxicity.py --dataset LC50
+```
 you can re-train the model by:
-
-- python finetune_Toxicity.py --dataset LC50 --retrain 1
-
+```
+python finetune_Toxicity.py --dataset LC50 --retrain 1
+```
 Some details:
 
 1. Lip data is saved as data/lip.pkl, you can unzip data/lip.zip to use it to save time
@@ -42,7 +42,8 @@ Some details:
 --------------------------------------------------------------------------------------
 
 Dependency:
-
-- pip install paddlepaddle
-- pip install rdkit-pypi
-- pip install pgl
+```
+pip install paddlepaddle
+pip install rdkit-pypi
+pip install pgl
+```
