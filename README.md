@@ -14,7 +14,11 @@ To save training time, you can generate all needed data for all smiles first:
 
 - python prepare_graph_data.py
 
-Also you can email us if you need our processed data: 20205227080@stu.suda.edu.cn
+Or download our processes data: https://pan.baidu.com/s/1JyEitczI3ih5vbBDMMaQig password:wdnm
+
+cat the files
+
+- cat logs.tar.bz2.* | tar -zxv ./processed_data
 
 --------------------------------------------------------------------------------------
 
