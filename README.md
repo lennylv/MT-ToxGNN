@@ -59,3 +59,7 @@ pip install rdkit-pypi
 pip install pgl
 pip install deepchem
 ```
+
+--------------------------------------------------------------------------------------
+Any more questions, please let me know:
+20205227080@stu.suda.edu.cn
