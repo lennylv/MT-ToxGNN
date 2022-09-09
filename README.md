@@ -25,14 +25,25 @@ tar xvf new_tar.tar -C ./processed_data/
 
 Reproduce results:
 
+four toxicity-datasets and logP:
+
 The finetune_**.py are used to quickly reproduce the results:
 ```
 python finetune_Toxicity.py --dataset LC50
 ```
 you can re-train the model by:
 ```
-python finetune_Toxicity.py --dataset LC50 --retrain 1
+python finetune_Toxicity.py --dataset LC50 --re_train 1
 ```
+
+FreeSolv, Lipop and BBBP:
+
+```
+python finetune_FreeSol.py --random False
+python finetune_Lip.py --scaffold True
+python finetune_BBBP.py
+```
+
 Some details:
 
 1. Lip data is saved as data/lip.pkl, you can unzip data/lip.zip to use it to save time
