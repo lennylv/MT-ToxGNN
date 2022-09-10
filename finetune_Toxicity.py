@@ -329,10 +329,6 @@ def clear_main(args, gne=False):
     print('Total param num: %s' % (len(model.parameters())))
     print('Encoder param num: %s' % (len(encoder_params)))
     print('Head param num: %s' % (len(head_params)))
-
-    # init_model = './save_model/pretrain_models-chemrl_gem/regr.pdparams'
-    # compound_encoder.set_state_dict(paddle.load(init_model))
-
     print('Processing data...')
     train_dataset = get_dataset(dataset_name, 'trainset', args)
 
