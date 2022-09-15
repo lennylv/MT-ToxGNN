@@ -47,12 +47,13 @@ python finetune_BBBP.py
 Some details:
 
 1. Lip data is saved as data/lip.pkl, you can unzip data/lip.zip to use it to save time
+2. The processed BBBP data is also provided in data/*
 
-2. The trainset of logp is > 25 mb, and you can unzip dataset/logp/trainset.zip to use it
+3. The trainset of logp is > 25 mb, and you can unzip dataset/logp/trainset.zip to use it
 
-3. The trained model are provided in Downstream/* 
+4. The trained model are provided in Downstream/* 
 
-4. The pre-trained model are provided in save_encoder/*, we provide 3 pre-trained models.
+5. The pre-trained model are provided in save_encoder/*, we provide 3 pre-trained models.
 
 --------------------------------------------------------------------------------------
 
