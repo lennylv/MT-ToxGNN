@@ -50,6 +50,10 @@ Some details:
 
 2. The trainset of logp is > 25 mb, and you can unzip dataset/logp/trainset.zip to use it
 
+3. The trained model are provided in Downstream/* 
+
+4. The pre-trained model are provided in save_encoder/*, we provide 3 pre-trained models.
+
 --------------------------------------------------------------------------------------
 
 Dependency:
