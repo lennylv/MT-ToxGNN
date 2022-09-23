@@ -53,7 +53,7 @@ Some details:
 
 4. The trained model are provided in Downstream/* 
 
-5. The pre-trained model are provided in save_encoder/*, we provide 3 pre-trained models.
+5. The pre-trained model are provided in save_encoder/*, we provide 5 pre-trained models.
 
 --------------------------------------------------------------------------------------
 
