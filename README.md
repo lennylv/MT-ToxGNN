@@ -1,4 +1,5 @@
-# vdWGraph
+# vdWGraph: code of MT-ToxGNN,计算机工程与应用，增强分子拓扑信息的多任务图神经网络算法
+& MT-ToxGNN 2.0: pretrained MT-ToxGNN
 
 --------------------------------------------------------------------------------------
 Pre-train data availability:
